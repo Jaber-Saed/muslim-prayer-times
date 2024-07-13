@@ -70,7 +70,7 @@
         {
           "id": "prayerTimes",
           "title": "Prayer Times",
-          "icon": "media/pray-light.ico"
+          "icon": "media/pray-dark.svg"
         }
       ]
     },
@@ -86,8 +86,8 @@
       {
         "command": "muslim-prayer-times.refresh",
         "icon": {
-          "dark": "media/pray-dark.ico",
-          "light": "media/pray-light.ico"
+          "dark": "media/pray-dark.svg",
+          "light": "media/pray-dark.svg"
         },
         "title": "Refresh Prayer Times"
       },
