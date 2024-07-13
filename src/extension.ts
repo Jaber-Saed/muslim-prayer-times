@@ -128,16 +128,16 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 			nextPrayerItem.iconPath = new vscode.ThemeIcon('clock');
 			nextPrayerItem.collapsibleState = vscode.TreeItemCollapsibleState.None;
 			items.push(nextPrayerItem);
-
+			
 			items.push(new vscode.TreeItem('─'.repeat(30)));
-
+			
 			const longestPrayerName = Math.max(...Object.keys(this.prayerTimes).map(prayer => translations[this.language!][prayer].length));
-
+			
 			for (const [prayer, time] of Object.entries(this.prayerTimes)) {
 				const translatedPrayer = translations[this.language!][prayer];
 				const displayTime = this.timeFormat === '12-hour' ? convertTo12Hour(time as string) : time;
 				const timeLeft = this.getTimeRemaining(time as string);
-
+				
 				const paddedPrayerName = translatedPrayer.padEnd(longestPrayerName, ' ');
 				const item = new vscode.TreeItem(`${paddedPrayerName}  ${displayTime}`);
 				item.description = `(${timeLeft} remaining)`;
@@ -146,9 +146,11 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 					item.iconPath = new vscode.ThemeIcon('arrow-right');
 					item.contextValue = 'nextPrayer';
 				}
-
+				
 				items.push(item);
 			}
+			// items.push(new vscode.TreeItem('─'.repeat(30)));
+			// items.push(new vscode.TreeItem('{ إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا  } '));
 		}
 
 		return items;
