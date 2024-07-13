@@ -1,5 +1,3 @@
-
-
 # Muslim Prayer Times Extension
 
 
@@ -26,6 +24,10 @@ The **Muslim Prayer Times** extension for Visual Studio Code is a productivity t
 - Users have the option to enable or disable the Azan sound, which will play at prayer times.
 - The default setting is off.
 - The Azan sound is played from an included MP3 file, providing an audible reminder for prayers.
+
+### Language Selection
+- Users can specify the language in which the names of prayers and times are displayed.
+- Configurable through the extension settings.
 
 ### Easy Configuration
 - The extension settings allow users to easily set their location and choose their preferred time format and notification preferences.
