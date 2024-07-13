@@ -2,7 +2,7 @@
   "name": "muslim-prayer-times",
   "displayName": "Muslim Prayer Times",
   "description": "Displays Muslim prayer times based on location with notifications and a convenient view.",
-  "version": "0.0.1", 
+  "version": "0.0.1",
   "publisher": "JaberSaid",
   "engines": {
     "vscode": "^1.91.0"
@@ -86,8 +86,8 @@
       {
         "command": "muslim-prayer-times.refresh",
         "icon": {
-          "dark": "media/pray-viewer.png",
-          "light": "media/pray-viewer.png"
+          "dark": "media/pray-dark.ico",
+          "light": "media/pray-light.ico"
         },
         "title": "Refresh Prayer Times"
       },
@@ -119,9 +119,17 @@
         },
         "muslim-prayer-times.timeFormat": {
           "type": "string",
-          "enum": ["24-hour", "12-hour"],
+          "enum": [
+            "24-hour",
+            "12-hour"
+          ],
           "default": "24-hour",
           "description": "Choose the time format for prayer times display."
+        },
+        "muslim-prayer-times.playAzan": {
+          "type": "boolean",
+          "default": false,
+          "description": "Play Azan sound at prayer times."
         }
       }
     }
@@ -141,6 +149,7 @@
     "@types/mocha": "^10.0.7",
     "@types/node": "^20.x",
     "@types/node-schedule": "^2.1.7",
+    "@types/play-sound": "^1.1.2",
     "@types/vscode": "^1.91.0",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.11.0",
@@ -154,6 +163,7 @@
   },
   "dependencies": {
     "axios": "^1.7.2",
-    "node-schedule": "^2.1.1"
+    "node-schedule": "^2.1.1",
+    "play-sound": "^1.1.6"
   }
 }
