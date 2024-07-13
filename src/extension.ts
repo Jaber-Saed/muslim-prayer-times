@@ -24,7 +24,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.workspace.onDidChangeConfiguration(event => {
 			if (event.affectsConfiguration('muslim-prayer-times')) {
 				provider.refreshSettings();
-				provider.refresh();
+				provider.debouncedRefresh();
 			}
 		})
 	);
@@ -33,6 +33,9 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() { }
 
 class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
+	private _onDidChangeTreeData: vscode.EventEmitter<vscode.TreeItem | undefined | null | void> = new vscode.EventEmitter<vscode.TreeItem | undefined | null | void>();
+	readonly onDidChangeTreeData: vscode.Event<vscode.TreeItem | undefined | null | void> = this._onDidChangeTreeData.event;
+
 	private prayerTimes: PrayerTimes | null = null;
 	private location: string | undefined;
 	private timeFormat: string | undefined;
@@ -40,6 +43,7 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 	private language: string | undefined;
 	private azanPlayer: any;
 	private jobs: schedule.Job[] = [];
+	private refreshDebounce: NodeJS.Timeout | null = null;
 
 	constructor(private context: vscode.ExtensionContext) {
 		this.refreshSettings();
@@ -47,24 +51,34 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 	}
 
 	refreshSettings() {
-		this.location = vscode.workspace.getConfiguration().get('muslim-prayer-times.location');
-		this.timeFormat = vscode.workspace.getConfiguration().get('muslim-prayer-times.timeFormat');
-		this.playAzan = vscode.workspace.getConfiguration().get('muslim-prayer-times.playAzan');
-		this.language = vscode.workspace.getConfiguration().get('muslim-prayer-times.language');
+		const config = vscode.workspace.getConfiguration('muslim-prayer-times');
+		this.location = config.get('location');
+		this.timeFormat = config.get('timeFormat');
+		this.playAzan = config.get('playAzan');
+		this.language = config.get('language');
 		this.azanPlayer = player();
-		this.refresh();
 	}
 
 	async refresh() {
+		this.refreshSettings();
 		if (!this.location) {
 			vscode.window.showErrorMessage('Please set your location to fetch accurate prayer times.');
 			return;
 		}
 
-		const [latitude, longitude] = this.location!.split(',').map(Number);
+		const [latitude, longitude] = this.location.split(',').map(Number);
 		this.prayerTimes = await getPrayerTimes(latitude, longitude);
 		this.scheduleNotifications();
-		this.refreshTreeView();
+		this._onDidChangeTreeData.fire();
+	}
+
+	public debouncedRefresh() {
+		if (this.refreshDebounce) {
+			clearTimeout(this.refreshDebounce);
+		}
+		this.refreshDebounce = setTimeout(() => {
+			this.refresh();
+		}, 300);
 	}
 
 	private scheduleNotifications() {
@@ -82,17 +96,11 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 								vscode.window.showErrorMessage('Error playing Azan sound: ' + err.message);
 							}
 						});
-						this.azanPlayer.play(vscode.Uri.file(this.context.asAbsolutePath('media/azan.mp3')).fsPath);
 					}
 				});
 				this.jobs.push(job);
 			});
 		}
-	}
-
-	private refreshTreeView() {
-		vscode.commands.executeCommand('workbench.view.explorer');
-		vscode.commands.executeCommand('prayerTimesView.refresh');
 	}
 
 	getTreeItem(element: vscode.TreeItem): vscode.TreeItem {
@@ -106,16 +114,18 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 
 		const items = [];
 
-		for (const [prayer, time] of Object.entries(this.prayerTimes!)) {
-			const translatedPrayer = translations[this.language!][prayer];
-			const displayTime = this.timeFormat === '12-hour' ? convertTo12Hour(time) : time;
-			items.push(new vscode.TreeItem(`${translatedPrayer}: ${displayTime}`));
+		if (this.prayerTimes) {
+			for (const [prayer, time] of Object.entries(this.prayerTimes)) {
+				const translatedPrayer = translations[this.language!][prayer];
+				const displayTime = this.timeFormat === '12-hour' ? convertTo12Hour(time as string) : time;
+				items.push(new vscode.TreeItem(`${translatedPrayer}: ${displayTime}`));
+			}
 		}
 
 		return items;
 	}
-	
 }
+
 function convertTo12Hour(time: string): string {
 	const [hour, minute] = time.split(':').map(Number);
 	const period = hour >= 12 ? 'PM' : 'AM';
