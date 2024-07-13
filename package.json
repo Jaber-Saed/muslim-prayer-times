@@ -115,9 +115,9 @@
       "properties": {
         "muslim-prayer-times.location": {
           "type": "string",
-          "default": "40.7128,-74.0060",
+          "default": "31.9857, 35.8229",
           "title": "Muslim Prayer Times",
-          "description": "Set your location as latitude,longitude (e.g., 40.7128,-74.0060)"
+          "description": "Set your location as latitude,longitude (e.g., 40.7128,-74.0060) You can get it by going to Google Map and heading to your location, then clicking the right button and copying the coordinates and pasting them here."
         },
         "muslim-prayer-times.timeFormat": {
           "type": "string",
@@ -130,7 +130,7 @@
         },
         "muslim-prayer-times.playAzan": {
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Enable or disable the Azan sound notification"
         },
         "muslim-prayer-times.language": {
