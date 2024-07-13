@@ -1,7 +1,7 @@
 {
   "name": "muslim-prayer-times",
   "displayName": "Muslim Prayer Times",
-  "description": "Displays Muslim prayer times based on location with notifications and a convenient view.",
+  "description": "Stay connected to your daily prayers with the Muslim Prayer Times extension for Visual Studio Code. Fetching accurate prayer times based on your location, this extension provides customizable notifications, a convenient prayer times view, and optional Azan sound alerts. Choose between 12-hour and 24-hour time formats and select your preferred language for prayer names and timings. Enhance your productivity while honoring your faith with timely reminders of your daily prayers.",
   "version": "0.0.1",
   "publisher": "JaberSaid",
   "engines": {
@@ -24,6 +24,7 @@
     "prayer times",
     "أوقات الصلاة",
     "prayer alerts",
+    "muslim prayer times",
     "prayer reminders",
     "مواقيت صلاة",
     "prayer",
@@ -82,7 +83,7 @@
         }
       ]
     },
-      "viewsWelcome": [
+    "viewsWelcome": [
       {
         "view": "prayerTimesView",
         "contents": "Welcome to Muslim Prayer Times. [Set Location](command:muslim-prayer-times.setLocation)\n[Refresh Prayer Times](command:muslim-prayer-times.refresh)"
