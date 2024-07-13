@@ -139,25 +139,27 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 				const timeLeft = this.getTimeRemaining(time as string);
 				
 				const paddedPrayerName = translatedPrayer.padEnd(longestPrayerName, ' ');
-				const item = new vscode.TreeItem(`${paddedPrayerName}  ${displayTime}`);
-				item.description = `(${timeLeft} remaining)`;
+				const prayerNameItem = new vscode.TreeItem(paddedPrayerName, vscode.TreeItemCollapsibleState.None);
+				prayerNameItem.contextValue = 'prayerName';
+				const prayerTimeItem = new vscode.TreeItem(displayTime, vscode.TreeItemCollapsibleState.None);
+				prayerTimeItem.contextValue = 'prayerTime';
+				prayerTimeItem.description = `(${timeLeft} remaining)`;
 
 				if (prayer === nextPrayer) {
-					item.iconPath = new vscode.ThemeIcon('arrow-right');
-					item.contextValue = 'nextPrayer';
+					prayerNameItem.iconPath = new vscode.ThemeIcon('arrow-right');
+					prayerTimeItem.iconPath = new vscode.ThemeIcon('arrow-right');
 				}
 				
-				items.push(item);
+				items.push(prayerNameItem, prayerTimeItem);
 			}
-			// items.push(new vscode.TreeItem('─'.repeat(30)));
-			// items.push(new vscode.TreeItem('{ إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا  } '));
+			items.push(new vscode.TreeItem('─'.repeat(30), vscode.TreeItemCollapsibleState.None));
 		}
 
 		return items;
 	}
 
-	public getTimeRemaining(prayerTime: string): string {
-		const currentTime = new Date();
+	private getTimeRemaining(prayerTime: string): string {
+		const currentTime = new Date(); 
 		const [hours, minutes] = prayerTime.split(':').map(Number);
 		const prayerDate = new Date(currentTime);
 		prayerDate.setHours(hours, minutes, 0, 0);
