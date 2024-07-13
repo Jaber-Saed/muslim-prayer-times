@@ -2,14 +2,13 @@
   "name": "muslim-prayer-times",
   "displayName": "Muslim Prayer Times",
   "description": "Displays Muslim prayer times based on location with notifications and a convenient view.",
-  "version": "0.0.1",
+  "version": "0.0.1", 
   "publisher": "JaberSaid",
   "engines": {
     "vscode": "^1.91.0"
   },
   "categories": [
-    "Other",
-    "Productivity"
+    "Other"
   ],
   "activationEvents": [
     "onStartupFinished",
@@ -87,10 +86,14 @@
       {
         "command": "muslim-prayer-times.refresh",
         "icon": {
-          "dark": "media/pray-dark.ico",
-          "light": "media/pray-light.ico"
+          "dark": "media/pray-viewer.png",
+          "light": "media/pray-viewer.png"
         },
         "title": "Refresh Prayer Times"
+      },
+      {
+        "command": "muslim-prayer-times.setLocation",
+        "title": "Set Location"
       }
     ],
     "menus": {
@@ -99,8 +102,28 @@
           "command": "muslim-prayer-times.refresh",
           "when": "view == prayerTimesView",
           "group": "navigation"
+        },
+        {
+          "command": "muslim-prayer-times.setLocation",
+          "group": "navigation"
         }
       ]
+    },
+    "configuration": {
+      "title": "Muslim Prayer Times",
+      "properties": {
+        "muslim-prayer-times.location": {
+          "type": "string",
+          "default": "40.7128,-74.0060",
+          "description": "Enter latitude and longitude (comma-separated) for accurate prayer times. Example: '40.7128,-74.0060'"
+        },
+        "muslim-prayer-times.timeFormat": {
+          "type": "string",
+          "enum": ["24-hour", "12-hour"],
+          "default": "24-hour",
+          "description": "Choose the time format for prayer times display."
+        }
+      }
     }
   },
   "scripts": {
