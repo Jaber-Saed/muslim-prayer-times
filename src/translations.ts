@@ -1,12 +1,12 @@
 export const translations: { [key: string]: { [key: string]: string } } = {
-    "العربية": {
+    "arabic": {
         "fajr": "الفجر",
         "dhuhr": "الظهر",
         "asr": "العصر",
         "maghrib": "المغرب",
         "isha": "العشاء"
     },
-    "English": {
+    "english": {
         "fajr": "Fajr",
         "dhuhr": "Dhuhr",
         "asr": "Asr",

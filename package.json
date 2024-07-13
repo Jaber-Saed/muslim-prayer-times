@@ -111,11 +111,13 @@
     },
     "configuration": {
       "title": "Muslim Prayer Times",
+      "type": "object",
       "properties": {
         "muslim-prayer-times.location": {
           "type": "string",
           "default": "40.7128,-74.0060",
-          "description": "Enter latitude and longitude (comma-separated) for accurate prayer times. Example: '40.7128,-74.0060'"
+          "title": "Muslim Prayer Times",
+          "description": "Set your location as latitude,longitude (e.g., 40.7128,-74.0060)"
         },
         "muslim-prayer-times.timeFormat": {
           "type": "string",
@@ -124,18 +126,18 @@
             "12-hour"
           ],
           "default": "24-hour",
-          "description": "Choose the time format for prayer times display."
+          "description": "Choose how to display prayer times (24-hour or 12-hour format)"
         },
         "muslim-prayer-times.playAzan": {
           "type": "boolean",
           "default": false,
-          "description": "Play Azan sound at prayer times."
+          "description": "Enable or disable the Azan sound notification"
         },
         "muslim-prayer-times.language": {
           "type": "string",
           "enum": [
-            "العربية",
-            "English",
+            "arabic",
+            "english",
             "简体中文",
             "繁體中文",
             "にほんご",
