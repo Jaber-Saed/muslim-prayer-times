@@ -118,23 +118,33 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 			await this.refresh();
 		}
 
-		const items = [];
+		const items: vscode.TreeItem[] = [];
 
 		if (this.prayerTimes) {
 			const { prayer: nextPrayer, timeRemaining } = getTimeUntilNextPrayer(this.prayerTimes);
 
-			items.push(new vscode.TreeItem(`Next Prayer: ${translations[this.language!][nextPrayer]} (in ${timeRemaining})`));
+			const nextPrayerItem = new vscode.TreeItem(`Next Prayer: ${translations[this.language!][nextPrayer]}`);
+			nextPrayerItem.description = `in ${timeRemaining}`;
+			nextPrayerItem.iconPath = new vscode.ThemeIcon('clock');
+			nextPrayerItem.collapsibleState = vscode.TreeItemCollapsibleState.None;
+			items.push(nextPrayerItem);
 
-			items.push(new vscode.TreeItem('──────────────────────────────────────'));
+			items.push(new vscode.TreeItem('─'.repeat(30)));
+
+			const longestPrayerName = Math.max(...Object.keys(this.prayerTimes).map(prayer => translations[this.language!][prayer].length));
 
 			for (const [prayer, time] of Object.entries(this.prayerTimes)) {
 				const translatedPrayer = translations[this.language!][prayer];
 				const displayTime = this.timeFormat === '12-hour' ? convertTo12Hour(time as string) : time;
 				const timeLeft = this.getTimeRemaining(time as string);
-				const item = new vscode.TreeItem(`${translatedPrayer}: ${displayTime} (${timeLeft}remaining)`);
+
+				const paddedPrayerName = translatedPrayer.padEnd(longestPrayerName, ' ');
+				const item = new vscode.TreeItem(`${paddedPrayerName}  ${displayTime}`);
+				item.description = `(${timeLeft} remaining)`;
 
 				if (prayer === nextPrayer) {
-					item.iconPath = new vscode.ThemeIcon('clock');
+					item.iconPath = new vscode.ThemeIcon('arrow-right');
+					item.contextValue = 'nextPrayer';
 				}
 
 				items.push(item);

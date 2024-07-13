@@ -82,6 +82,17 @@
         }
       ]
     },
+      "viewsWelcome": [
+      {
+        "view": "prayerTimesView",
+        "contents": "Welcome to Muslim Prayer Times. [Set Location](command:muslim-prayer-times.setLocation)\n[Refresh Prayer Times](command:muslim-prayer-times.refresh)"
+      }
+    ],
+    "styles": [
+      {
+        "path": "./src/prayerTimes.css"
+      }
+    ],
     "commands": [
       {
         "command": "muslim-prayer-times.refresh",

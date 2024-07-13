@@ -1,0 +1,15 @@
+.vscode-light .next-prayer,
+.vscode-dark .next-prayer {
+    font-weight: bold;
+    color: var(--vscode-textLink-foreground);
+}
+
+.vscode-light .prayer-time,
+.vscode-dark .prayer-time {
+    opacity: 0.8;
+}
+
+.vscode-light .time-remaining,
+.vscode-dark .time-remaining {
+    opacity: 0.7;
+}
