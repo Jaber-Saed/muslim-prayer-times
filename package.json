@@ -1,23 +1,77 @@
 {
   "name": "muslim-prayer-times",
-  "displayName": "muslim-prayer-times",
-  "description": "Displays prayer times based on location",
+  "displayName": "Muslim Prayer Times",
+  "description": "Displays Muslim prayer times based on location with notifications and a convenient view.",
   "version": "0.0.1",
+  "publisher": "JaberSaid",
   "engines": {
     "vscode": "^1.91.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Productivity"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished",
+    "onCommand:muslim-prayer-times.refresh"
+  ],
   "main": "./dist/extension.js",
+  "icon": "media/pray-light.ico",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jaber-Saed/muslim-prayer-times"
+  },
+  "keywords": [
+    "prayer alerts",
+    "prayer times",
+    "prayer reminders",
+    "مواقيت صلاة",
+    "prayer",
+    "muslim",
+    "islam",
+    "Islamic",
+    "daily prayers",
+    "adhan",
+    "azan",
+    "salat",
+    "namaz",
+    "time management",
+    "productivity tool",
+    "faith",
+    "spiritual",
+    "reminders",
+    "location-based",
+    "Muslim daily practices",
+    "Islamic tools",
+    "Islamic productivity",
+    "faith-based productivity",
+    "صلاة",
+    "مسلم",
+    "إسلام",
+    "أوقات الصلاة",
+    "إشعارات",
+    "الأذان",
+    "إقامة الصلاة",
+    "الصلوات اليومية",
+    "تنظيم الوقت",
+    "أداة إنتاجية",
+    "الإيمان",
+    "روحاني",
+    "تنبيهات الصلاة",
+    "تذكيرات",
+    "استنادًا إلى الموقع",
+    "ممارسات يومية للمسلمين",
+    "أدوات إسلامية",
+    "إنتاجية إسلامية",
+    "إنتاجية قائمة على الإيمان"
+  ],
   "contributes": {
     "viewsContainers": {
       "activitybar": [
         {
           "id": "prayerTimes",
           "title": "Prayer Times",
-          "icon": "media/icon.png"
+          "icon": "media/pray-light.ico"
         }
       ]
     },
@@ -31,15 +85,28 @@
     },
     "commands": [
       {
-        "command": "muslim-prayer-times.helloWorld",
-        "title": "Hello World"
+        "command": "muslim-prayer-times.refresh",
+        "icon": {
+          "dark": "media/pray-dark.ico",
+          "light": "media/pray-light.ico"
+        },
+        "title": "Refresh Prayer Times"
       }
-    ]
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "muslim-prayer-times.refresh",
+          "when": "view == prayerTimesView",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
+    "compile": "webpack --mode development",
+    "watch": "webpack --watch --mode development",
     "package": "webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
@@ -49,7 +116,7 @@
   },
   "devDependencies": {
     "@types/mocha": "^10.0.7",
-    "@types/node": "20.x",
+    "@types/node": "^20.x",
     "@types/node-schedule": "^2.1.7",
     "@types/vscode": "^1.91.0",
     "@typescript-eslint/eslint-plugin": "^7.14.1",

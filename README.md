@@ -1,71 +1,71 @@
-# muslim-prayer-times README
+# Muslim Prayer Times
 
-This is the README for your extension "muslim-prayer-times". After writing up a brief description, we recommend including the following sections.
+[![Version](https://vsmarketplacebadge.apphb.com/version/jabersaid.prayer-times.svg)](https://marketplace.visualstudio.com/items?itemName=jabersaid.prayer-times)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/jabersaid.prayer-times.svg)](https://marketplace.visualstudio.com/items?itemName=jabersaid.prayer-times)
+[![Ratings](https://vsmarketplacebadge.apphb.com/rating/jabersaid.prayer-times.svg)](https://marketplace.visualstudio.com/items?itemName=jabersaid.prayer-times)
+
+A Visual Studio Code extension that displays Muslim prayer times based on the user's location. It includes notifications for prayer times and provides a convenient view in the Primary Side Bar.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Display prayer times for Fajr, Dhuhr, Asr, Maghrib, and Isha.
+- Show time remaining until the next prayer.
+- Send notifications at prayer times.
+- Refresh prayer times based on the user's location.
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+### From VS Code Marketplace
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+1. Open Visual Studio Code.
+2. Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing `Ctrl+Shift+X`.
+3. Search for "Muslim Prayer Times" and click "Install".
 
-## Requirements
+### From VSIX
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1. Download the latest `.vsix` file from the [Releases](https://github.com/your-repo/prayer-times/releases) page.
+2. Open Visual Studio Code.
+3. Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window or by pressing `Ctrl+Shift+X`.
+4. Click on the three-dot menu (More Actions) at the top right of the Extensions view, then select `Install from VSIX...`.
+5. Select the downloaded `.vsix` file.
 
-## Extension Settings
+## Usage
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+1. Click on the Prayer Times icon in the Primary Side Bar.
+2. View the prayer times for Fajr, Dhuhr, Asr, Maghrib, and Isha.
+3. The extension will show notifications at the respective prayer times.
+4. To refresh the prayer times, open the Command Palette (`Ctrl+Shift+P`) and run the command `PrayerTimes: Refresh`.
 
-For example:
+## Configuration
 
-This extension contributes the following settings:
+The extension uses the Aladhan API to fetch prayer times based on the user's location. The location is currently mocked for demonstration purposes. Future versions will include automatic location detection.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Contributing
 
-## Known Issues
+Contributions are welcome! Please follow these steps to contribute:
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -am 'Add new feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Create a new Pull Request.
 
-## Release Notes
+## Issues
 
-Users appreciate release notes as you update your extension.
+If you encounter any issues or have any suggestions, please open an [issue](https://github.com/your-repo/prayer-times/issues) on GitHub.
 
-### 1.0.0
+## License
 
-Initial release of ...
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-### 1.0.1
+## Acknowledgements
 
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+- [Aladhan API](https://aladhan.com/) for providing prayer times.
+- [Visual Studio Code](https://code.visualstudio.com/) for the amazing code editor.
 
 ---
 
-## Following extension guidelines
+**Developed by [Jaber Said](https://github.com/jabersaid)**
 
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Special Thanks to the OpenAI Team for providing assistance.**
