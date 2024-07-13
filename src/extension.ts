@@ -20,6 +20,12 @@ export function activate(context: vscode.ExtensionContext) {
 				await vscode.workspace.getConfiguration().update('muslim-prayer-times.location', location, true);
 				provider.refresh();
 			}
+		}),
+		vscode.workspace.onDidChangeConfiguration(event => {
+			if (event.affectsConfiguration('muslim-prayer-times')) {
+				provider.refreshSettings();
+				provider.refresh();
+			}
 		})
 	);
 }
@@ -33,15 +39,19 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 	private playAzan: boolean | undefined;
 	private language: string | undefined;
 	private azanPlayer: any;
+	private jobs: schedule.Job[] = [];
 
 	constructor(private context: vscode.ExtensionContext) {
+		this.refreshSettings();
+		this.refresh();
+	}
+
+	refreshSettings() {
 		this.location = vscode.workspace.getConfiguration().get('muslim-prayer-times.location');
 		this.timeFormat = vscode.workspace.getConfiguration().get('muslim-prayer-times.timeFormat');
 		this.playAzan = vscode.workspace.getConfiguration().get('muslim-prayer-times.playAzan');
 		this.language = vscode.workspace.getConfiguration().get('muslim-prayer-times.language');
 		this.azanPlayer = player();
-
-		this.refresh();
 	}
 
 	async refresh() {
@@ -52,6 +62,9 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 	}
 
 	private scheduleNotifications() {
+		this.jobs.forEach(job => job.cancel());
+		this.jobs = [];
+
 		if (this.prayerTimes) {
 			Object.entries(this.prayerTimes).forEach(([prayer, time]) => {
 				const [hours, minutes] = (time as string).split(':').map(Number);
@@ -61,6 +74,7 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 						this.azanPlayer.play(vscode.Uri.file(this.context.asAbsolutePath('media/azan.mp3')).fsPath);
 					}
 				});
+				this.jobs.push(job);
 			});
 		}
 	}
