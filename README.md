@@ -13,6 +13,9 @@ The **Muslim Prayer Times** extension for Visual Studio Code is a productivity t
 - An icon in the Primary Side Bar allows users to access the prayer times view.
 - The view lists the names of the prayers along with their respective times.
 
+### Time Remaining for Next Prayer
+- Displays the time remaining until the next prayer within the prayer times view.
+
 ### 12-Hour and 24-Hour Time Formats
 - Users can choose between 12-hour and 24-hour time formats for displaying prayer times.
 - Configurable through the extension settings.

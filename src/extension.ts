@@ -4,8 +4,10 @@ import { getPrayerTimes, PrayerTimes } from './prayerTimesService';
 import player from 'play-sound';
 import { translations } from './translations';
 
+let provider: PrayerTimesProvider;
+
 export function activate(context: vscode.ExtensionContext) {
-	const provider = new PrayerTimesProvider(context);
+	provider = new PrayerTimesProvider(context);
 	vscode.window.registerTreeDataProvider('prayerTimesView', provider);
 
 	context.subscriptions.push(
@@ -30,7 +32,9 @@ export function activate(context: vscode.ExtensionContext) {
 	);
 }
 
-export function deactivate() { }
+export function deactivate() {
+	provider.stopUpdateTimer();
+}
 
 class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 	private _onDidChangeTreeData: vscode.EventEmitter<vscode.TreeItem | undefined | null | void> = new vscode.EventEmitter<vscode.TreeItem | undefined | null | void>();
@@ -44,6 +48,7 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 	private azanPlayer: any;
 	private jobs: schedule.Job[] = [];
 	private refreshDebounce: NodeJS.Timeout | null = null;
+	private updateTimer: NodeJS.Timeout | null = null;
 
 	constructor(private context: vscode.ExtensionContext) {
 		this.refreshSettings();
@@ -70,6 +75,7 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 		this.prayerTimes = await getPrayerTimes(latitude, longitude);
 		this.scheduleNotifications();
 		this._onDidChangeTreeData.fire();
+		this.startUpdateTimer();
 	}
 
 	public debouncedRefresh() {
@@ -115,15 +121,92 @@ class PrayerTimesProvider implements vscode.TreeDataProvider<vscode.TreeItem> {
 		const items = [];
 
 		if (this.prayerTimes) {
+			const { prayer: nextPrayer, timeRemaining } = getTimeUntilNextPrayer(this.prayerTimes);
+
+			items.push(new vscode.TreeItem(`Next Prayer: ${translations[this.language!][nextPrayer]} (in ${timeRemaining})`));
+
+			items.push(new vscode.TreeItem('──────────────────────────────────────'));
+
 			for (const [prayer, time] of Object.entries(this.prayerTimes)) {
 				const translatedPrayer = translations[this.language!][prayer];
 				const displayTime = this.timeFormat === '12-hour' ? convertTo12Hour(time as string) : time;
-				items.push(new vscode.TreeItem(`${translatedPrayer}: ${displayTime}`));
+				const timeLeft = this.getTimeRemaining(time as string);
+				const item = new vscode.TreeItem(`${translatedPrayer}: ${displayTime} (${timeLeft}remaining)`);
+
+				if (prayer === nextPrayer) {
+					item.iconPath = new vscode.ThemeIcon('clock');
+				}
+
+				items.push(item);
 			}
 		}
 
 		return items;
 	}
+
+	public getTimeRemaining(prayerTime: string): string {
+		const currentTime = new Date();
+		const [hours, minutes] = prayerTime.split(':').map(Number);
+		const prayerDate = new Date(currentTime);
+		prayerDate.setHours(hours, minutes, 0, 0);
+
+		let diff = (prayerDate.getTime() - currentTime.getTime()) / 1000;
+		if (diff < 0) {
+			diff += 24 * 60 * 60;
+		}
+
+		const hoursRemaining = Math.floor(diff / 3600);
+		const minutesRemaining = Math.floor((diff % 3600) / 60);
+
+		return `${hoursRemaining}h ${minutesRemaining}m`;
+	}
+
+	startUpdateTimer() {
+		if (this.updateTimer) {
+			clearInterval(this.updateTimer);
+		}
+		this.updateTimer = setInterval(() => {
+			this._onDidChangeTreeData.fire();
+		}, 60000);
+	}
+
+	stopUpdateTimer() {
+		if (this.updateTimer) {
+			clearInterval(this.updateTimer);
+			this.updateTimer = null;
+		}
+	}
+}
+
+function getTimeUntilNextPrayer(prayerTimes: PrayerTimes): { prayer: string; timeRemaining: string } {
+	const now = new Date();
+	const currentTime = now.getHours() * 60 + now.getMinutes();
+
+	let nextPrayer = '';
+	let minDiff = Infinity;
+
+	for (const [prayer, time] of Object.entries(prayerTimes)) {
+		const [hours, minutes] = (time as string).split(':').map(Number);
+		const prayerTime = hours * 60 + minutes;
+		let diff = prayerTime - currentTime;
+
+		if (diff < 0) {
+			diff += 24 * 60;
+		}
+
+		if (diff < minDiff) {
+			minDiff = diff;
+			nextPrayer = prayer;
+		}
+	}
+
+	const hours = Math.floor(minDiff / 60);
+	const minutes = minDiff % 60;
+
+	return {
+		prayer: nextPrayer,
+		timeRemaining: `${hours}h ${minutes}m`
+	};
 }
 
 function convertTo12Hour(time: string): string {
