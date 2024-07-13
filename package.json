@@ -130,6 +130,33 @@
           "type": "boolean",
           "default": false,
           "description": "Play Azan sound at prayer times."
+        },
+        "muslim-prayer-times.language": {
+          "type": "string",
+          "enum": [
+            "العربية",
+            "English",
+            "简体中文",
+            "繁體中文",
+            "にほんご",
+            "한국어",
+            "česky",
+            "Deutsch",
+            "française",
+            "italiano",
+            "Nederlands",
+            "português",
+            "tiếng Việt",
+            "español",
+            "Svenska",
+            "русский",
+            "bahasa",
+            "Polski",
+            "Turkish",
+            "ไทย"
+          ],
+          "default": "english",
+          "description": "Select the language for prayer names and timings"
         }
       }
     }
