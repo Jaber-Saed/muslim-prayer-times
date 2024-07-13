@@ -16,14 +16,15 @@
     "onCommand:muslim-prayer-times.refresh"
   ],
   "main": "./dist/extension.js",
-  "icon": "media/pray-light.ico",
+  "icon": "media/pray-viewer.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/Jaber-Saed/muslim-prayer-times"
   },
   "keywords": [
-    "prayer alerts",
     "prayer times",
+    "أوقات الصلاة",
+    "prayer alerts",
     "prayer reminders",
     "مواقيت صلاة",
     "prayer",
@@ -48,7 +49,6 @@
     "صلاة",
     "مسلم",
     "إسلام",
-    "أوقات الصلاة",
     "إشعارات",
     "الأذان",
     "إقامة الصلاة",
