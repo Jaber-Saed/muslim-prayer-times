@@ -79,7 +79,9 @@ For feedback or support, please open an issue in the [GitHub repository](https:/
 
 If you find this extension helpful, please give the repository a ⭐️ on GitHub! It helps others discover the project and shows your support.
 
+## Screenshots
 
+![Muslim Prayer Times Extension Screenshot](./media/shot.png)
 ---
 
 This extension is a valuable tool for Muslims who want to ensure they are always aware of their prayer times while working in Visual Studio Code. With its customizable settings and notifications, users can stay connected to their faith and manage their time effectively.
