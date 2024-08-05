@@ -1,7 +1,23 @@
-# Muslim Prayer Times Extension
+# Muslim Prayer Times Extension <img src="./media/pray-viewer.png" alt="pray-viewer" width="60" height="60" style="vertical-align: middle;">
 
 
 The **Muslim Prayer Times** extension for Visual Studio Code is a productivity tool designed to help Muslims keep track of their daily prayers by displaying prayer times based on the user's location. This extension provides a convenient view within the editor and offers customizable notifications to ensure that users never miss a prayer.
+
+## Table of Contents
+- [Screenshots](#screenshots)
+- [Features](#features)
+- [How to Use](#how-to-use)
+- [Installation](#installation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Feedback](#feedback)
+- [Show Your Support](#show-your-support)
+
+## Screenshots
+
+![Muslim Prayer Times Extension Screenshot](./media/shot.png)
+
+---
 
 ## Features
 
@@ -62,10 +78,11 @@ The **Muslim Prayer Times** extension for Visual Studio Code is a productivity t
 2. Go to the Extensions view by clicking on the Extensions icon in the Activity Bar on the side of the window.
 3. Search for `Muslim Prayer Times`.
 4. Click `Install`.
+5. Access the extension settings to configure your preferences.
 
 ## Contributing
 
-Contributions are welcome! Please fork the repository and submit a pull request with your improvements.
+Contributions are welcome! Please fork the repository and submit a pull request with your improvements. Follow the coding standards and guidelines mentioned in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
 ## License
 
@@ -79,9 +96,6 @@ For feedback or support, please open an issue in the [GitHub repository](https:/
 
 If you find this extension helpful, please give the repository a ⭐️ on GitHub! It helps others discover the project and shows your support.
 
-## Screenshots
-
-![Muslim Prayer Times Extension Screenshot](./media/shot.png)
 ---
 
 This extension is a valuable tool for Muslims who want to ensure they are always aware of their prayer times while working in Visual Studio Code. With its customizable settings and notifications, users can stay connected to their faith and manage their time effectively.
