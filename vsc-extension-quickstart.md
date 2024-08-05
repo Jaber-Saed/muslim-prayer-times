@@ -1,4 +1,4 @@
-# Muslim Prayer Times Extension <img src="./media/pray-viewer.png" alt="pray-viewer" width="60" height="60" style="vertical-align: middle;">
+# Muslim Prayer Times Extension 
 
 
 The **Muslim Prayer Times** extension for Visual Studio Code is a productivity tool designed to help Muslims keep track of their daily prayers by displaying prayer times based on the user's location. This extension provides a convenient view within the editor and offers customizable notifications to ensure that users never miss a prayer.
